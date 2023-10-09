@@ -1,0 +1,143 @@
+type file <ocaml attr="deriving show,eq"> = {
+  name: string;
+  expression: term;
+  location: location;
+}
+
+(* Define a location record type *)
+type location <ocaml attr="deriving show,eq"> = {
+  start: int;
+  end_ <json name="end">: int; 
+  filename: string;
+}
+
+(* Define the Error record type *)
+type error <ocaml attr="deriving show,eq">= {
+  message: string;
+  full_text: string;
+  location: location;
+}
+
+(* Define the BinaryOp type *)
+type binary_op <ocaml attr="deriving show,eq"> = [
+  | Add
+  | Sub
+  | Mul
+  | Div
+  | Rem
+  | Eq
+  | Neq
+  | Lt
+  | Gt
+  | Lte
+  | Gte
+  | And
+  | Or
+]
+
+
+(* Define the Term type *)
+type term <ocaml attr="deriving show,eq"> = [
+    | Error of error
+    | Int of const_int
+    | Str of const_str
+    | Call of call
+    | Binary of binary
+    | Function of function_
+    | Let of let_ 
+    | If of if_
+    | Print of print
+    | First of first
+    | Second of second
+    | Bool of bool_
+    | Tuple of tuple
+    | Var of var
+]
+<json
+  adapter.to_ocaml="Atdgen_runtime.Json_adapter.normalize_type_field \"kind\""
+  adapter.from_ocaml="Atdgen_runtime.Json_adapter.restore_type_field \"kind\""
+>
+
+(* Define the Call record type *)
+type call <ocaml attr="deriving show,eq">  = {
+  callee: term;
+  arguments: term list;
+  location: location;
+}
+
+type const_int <ocaml attr="deriving show,eq">  = {
+  value: int;
+  location: location;
+}
+
+type const_str  <ocaml attr="deriving show,eq"> = {
+  value: string;
+  location: location;
+}
+
+type var  <ocaml attr="deriving show,eq"> = {
+  text: string;
+  location: location;
+}
+
+(* Define the Binary record type *)
+type binary <ocaml attr="deriving show,eq">  = {
+  lhs: term;
+  op: binary_op;
+  rhs: term;
+  location: location;
+}
+
+(* Define the Function record type *)
+type function_ <ocaml attr="deriving show,eq">  = {
+  parameters: var list;
+  value: term;
+  location: location;
+}
+
+(* Define the Let record type *)
+type let_  <ocaml attr="deriving show,eq"> = {
+  name: var;
+  value: term;
+  next: term;
+  location: location;
+}
+
+(* Define the If record type *)
+type if_  <ocaml attr="deriving show,eq"> = {
+  condition: term;
+  then_ <json name="then">: term;
+  otherwise: term;
+  location: location;
+}
+
+(* Define the Print record type *)
+type print <ocaml attr="deriving show,eq">  = {
+  value: term;
+  location: location;
+}
+
+(* Define the First record type *)
+type first  <ocaml attr="deriving show,eq"> = {
+  value: term;
+  location: location;
+}
+
+(* Define the Second record type *)
+type second <ocaml attr="deriving show,eq">  = {
+  value: term;
+  location: location;
+}
+
+(* Define the Bool record type *)
+type bool_  <ocaml attr="deriving show,eq">  = {
+  value: bool;
+  location: location;
+}
+
+(* Define the Tuple record type *)
+type tuple  <ocaml attr="deriving show,eq"> = {
+  first: term;
+  second: term;
+  location: location;
+}

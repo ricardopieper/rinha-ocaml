@@ -1,0 +1,5 @@
+profile = conventional
+wrap-comments = true
+break-separators = after
+break-infix = wrap
+break-string-literals = auto

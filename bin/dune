@@ -1,0 +1,18 @@
+(executable
+ (public_name rinha)
+ (name main)
+ (libraries rinha core yojson atdgen-runtime)
+ (preprocess (pps ppx_deriving.show ppx_deriving.eq))
+ (flags :standard -w -30))
+
+(rule
+ (targets rinha_j.ml
+          rinha_j.mli)
+ (deps    rinha.atd)
+ (action  (run atdgen -j -j-std %{deps})))
+
+(rule
+ (targets rinha_t.ml
+          rinha_t.mli)
+ (deps    rinha.atd)
+ (action  (run atdgen -t %{deps})))
