@@ -1,9 +1,9 @@
 (executable
  (public_name rinha)
  (name main)
- (libraries rinha core yojson atdgen-runtime)
+ (libraries rinha core core_unix yojson atdgen-runtime)
  (preprocess (pps ppx_deriving.show ppx_deriving.eq))
- (flags :standard -w -30))
+ (ocamlopt_flags :standard -dflambda -O3 -w -30))
 
 (rule
  (targets rinha_j.ml

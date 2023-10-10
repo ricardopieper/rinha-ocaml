@@ -12,6 +12,11 @@ bug-reports: "https://github.com/username/reponame/issues"
 depends: [
   "ocaml"
   "dune" {>= "3.10"}
+  "core"
+  "core_unix"
+  "yojson"
+  "atdgen-runtime"
+  "ppx_deriving"
   "odoc" {with-doc}
 ]
 build: [

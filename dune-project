@@ -19,8 +19,9 @@
  (name rinha)
  (synopsis "A short synopsis")
  (description "A longer description")
- (depends ocaml dune)
+ (depends ocaml dune core core_unix yojson atdgen-runtime ppx_deriving)
  (tags
   (topics "to describe" your project)))
+
 
 ; See the complete stanza docs at https://dune.readthedocs.io/en/stable/dune-files.html#dune-project
